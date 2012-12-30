@@ -1,0 +1,314 @@
+[33mcommit 00da767361b82599e812357e566ddb77d504a131[m
+Author: Alon Lavi <alonlavi@gmail.com>
+Date:   Wed Oct 10 04:49:33 2012 -0400
+
+    Finish demo app
+
+[1mdiff --git a/app/assets/javascripts/microposts.js.coffee b/app/assets/javascripts/microposts.js.coffee[m
+[1mnew file mode 100644[m
+[1mindex 0000000..7615679[m
+[1m--- /dev/null[m
+[1m+++ b/app/assets/javascripts/microposts.js.coffee[m
+[36m@@ -0,0 +1,3 @@[m
+[32m+[m[32m# Place all the behaviors and hooks related to the matching controller here.[m
+[32m+[m[32m# All this logic will automatically be available in application.js.[m
+[32m+[m[32m# You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/[m
+[1mdiff --git a/app/assets/stylesheets/microposts.css.scss b/app/assets/stylesheets/microposts.css.scss[m
+[1mnew file mode 100644[m
+[1mindex 0000000..c14d62c[m
+[1m--- /dev/null[m
+[1m+++ b/app/assets/stylesheets/microposts.css.scss[m
+[36m@@ -0,0 +1,3 @@[m
+[32m+[m[32m// Place all the styles related to the Microposts controller here.[m
+[32m+[m[32m// They will automatically be included in application.css.[m
+[32m+[m[32m// You can use Sass (SCSS) here: http://sass-lang.com/[m
+[1mdiff --git a/app/controllers/microposts_controller.rb b/app/controllers/microposts_controller.rb[m
+[1mnew file mode 100644[m
+[1mindex 0000000..6ed1cd4[m
+[1m--- /dev/null[m
+[1m+++ b/app/controllers/microposts_controller.rb[m
+[36m@@ -0,0 +1,83 @@[m
+[32m+[m[32mclass MicropostsController < ApplicationController[m
+[32m+[m[32m  # GET /microposts[m
+[32m+[m[32m  # GET /microposts.json[m
+[32m+[m[32m  def index[m
+[32m+[m[32m    @microposts = Micropost.all[m
+[32m+[m
+[32m+[m[32m    respond_to do |format|[m
+[32m+[m[32m      format.html # index.html.erb[m
+[32m+[m[32m      format.json { render json: @microposts }[m
+[32m+[m[32m    end[m
+[32m+[m[32m  end[m
+[32m+[m
+[32m+[m[32m  # GET /microposts/1[m
+[32m+[m[32m  # GET /microposts/1.json[m
+[32m+[m[32m  def show[m
+[32m+[m[32m    @micropost = Micropost.find(params[:id])[m
+[32m+[m
+[32m+[m[32m    respond_to do |format|[m
+[32m+[m[32m      format.html # show.html.erb[m
+[32m+[m[32m      format.json { render json: @micropost }[m
+[32m+[m[32m    end[m
+[32m+[m[32m  end[m
+[32m+[m
+[32m+[m[32m  # GET /microposts/new[m
+[32m+[m[32m  # GET /microposts/new.json[m
+[32m+[m[32m  def new[m
+[32m+[m[32m    @micropost = Micropost.new[m
+[32m+[m
+[32m+[m[32m    respond_to do |format|[m
+[32m+[m[32m      format.html # new.html.erb[m
+[32m+[m[32m      format.json { render json: @micropost }[m
+[32m+[m[32m    end[m
+[32m+[m[32m  end[m
+[32m+[m
+[32m+[m[32m  # GET /microposts/1/edit[m
+[32m+[m[32m  def edit[m
+[32m+[m[32m    @micropost = Micropost.find(params[:id])[m
+[32m+[m[32m  end[m
+[32m+[m
+[32m+[m[32m  # POST /microposts[m
+[32m+[m[32m  # POST /microposts.json[m
+[32m+[m[32m  def create[m
+[32m+[m[32m    @micropost = Micropost.new(params[:micropost])[m
+[32m+[m
+[32m+[m[32m    respond_to do |format|[m
+[32m+[m[32m      if @micropost.save[m
+[32m+[m[32m        format.html { redirect_to @micropost, notice: 'Micropost was successfully created.' }[m
+[32m+[m[32m        format.json { render json: @micropost, status: :created, location: @micropost }[m
+[32m+[m[32m      else[m
+[32m+[m[32m        format.html { render action: "new" }[m
+[32m+[m[32m        format.json { render json: @micropost.errors, status: :unprocessable_entity }[m
+[32m+[m[32m      end[m
+[32m+[m[32m    end[m
+[32m+[m[32m  end[m
+[32m+[m
+[32m+[m[32m  # PUT /microposts/1[m
+[32m+[m[32m  # PUT /microposts/1.json[m
+[32m+[m[32m  def update[m
+[32m+[m[32m    @micropost = Micropost.find(params[:id])[m
+[32m+[m
+[32m+[m[32m    respond_to do |format|[m
+[32m+[m[32m      if @micropost.update_attributes(params[:micropost])[m
+[32m+[m[32m        format.html { redirect_to @micropost, notice: 'Micropost was successfully updated.' }[m
+[32m+[m[32m        format.json { head :no_content }[m
+[32m+[m[32m      else[m
+[32m+[m[32m        format.html { render action: "edit" }[m
+[32m+[m[32m        format.json { render json: @micropost.errors, status: :unprocessable_entity }[m
+[32m+[m[32m      end[m
+[32m+[m[32m    end[m
+[32m+[m[32m  end[m
+[32m+[m
+[32m+[m[32m  # DELETE /microposts/1[m
+[32m+[m[32m  # DELETE /microposts/1.json[m
+[32m+[m[32m  def destroy[m
+[32m+[m[32m    @micropost = Micropost.find(params[:id])[m
+[32m+[m[32m    @micropost.destroy[m
+[32m+[m
+[32m+[m[32m    respond_to do |format|[m
+[32m+[m[32m      format.html { redirect_to microposts_url }[m
+[32m+[m[32m      format.json { head :no_content }[m
+[32m+[m[32m    end[m
+[32m+[m[32m  end[m
+[32m+[m[32mend[m
+[1mdiff --git a/app/helpers/microposts_helper.rb b/app/helpers/microposts_helper.rb[m
+[1mnew file mode 100644[m
+[1mindex 0000000..f08aad2[m
+[1m--- /dev/null[m
+[1m+++ b/app/helpers/microposts_helper.rb[m
+[36m@@ -0,0 +1,2 @@[m
+[32m+[m[32mmodule MicropostsHelper[m
+[32m+[m[32mend[m
+[1mdiff --git a/app/models/micropost.rb b/app/models/micropost.rb[m
+[1mnew file mode 100644[m
+[1mindex 0000000..8d14ac8[m
+[1m--- /dev/null[m
+[1m+++ b/app/models/micropost.rb[m
+[36m@@ -0,0 +1,7 @@[m
+[32m+[m[32mclass Micropost < ActiveRecord::Base[m
+[32m+[m[32m  attr_accessible :content, :user_id[m
+[32m+[m
+[32m+[m[32m  belongs_to :user[m
+[32m+[m
+[32m+[m[32m  validates :content, :length => { :maximum => 140 }[m
+[32m+[m[32mend[m
+\ No newline at end of file[m
+[1mdiff --git a/app/models/user.rb b/app/models/user.rb[m
+[1mindex 942ec39..60fce9d 100644[m
+[1m--- a/app/models/user.rb[m
+[1m+++ b/app/models/user.rb[m
+[36m@@ -1,3 +1,4 @@[m
+ class User < ActiveRecord::Base[m
+   attr_accessible :email, :name[m
+[31m-end[m
+[32m+[m[32m  has_many :microposts[m
+[32m+[m[32mend[m
+\ No newline at end of file[m
+[1mdiff --git a/app/views/microposts/_form.html.erb b/app/views/microposts/_form.html.erb[m
+[1mnew file mode 100644[m
+[1mindex 0000000..4260441[m
+[1m--- /dev/null[m
+[1m+++ b/app/views/microposts/_form.html.erb[m
+[36m@@ -0,0 +1,25 @@[m
+[32m+[m[32m<%= form_for(@micropost) do |f| %>[m
+[32m+[m[32m  <% if @micropost.errors.any? %>[m
+[32m+[m[32m    <div id="error_explanation">[m
+[32m+[m[32m      <h2><%= pluralize(@micropost.errors.count, "error") %> prohibited this micropost from being saved:</h2>[m
+[32m+[m
+[32m+[m[32m      <ul>[m
+[32m+[m[32m      <% @micropost.errors.full_messages.each do |msg| %>[m
+[32m+[m[32m        <li><%= msg %></li>[m
+[32m+[m[32m      <% end %>[m
+[32m+[m[32m      </ul>[m
+[32m+[m[32m    </div>[m
+[32m+[m[32m  <% end %>[m
+[32m+[m
+[32m+[m[32m  <div class="field">[m
+[32m+[m[32m    <%= f.label :content %><br />[m
+[32m+[m[32m    <%= f.text_field :content %>[m
+[32m+[m[32m  </div>[m
+[32m+[m[32m  <div class="field">[m
+[32m+[m[32m    <%= f.label :user_id %><br />[m
+[32m+[m[32m    <%= f.number_field :user_id %>[m
+[32m+[m[32m  </div>[m
+[32m+[m[32m  <div class="actions">[m
+[32m+[m[32m    <%= f.submit %>[m
+[32m+[m[32m  </div>[m
+[32m+[m[32m<% end %>[m
+[1mdiff --git a/app/views/microposts/edit.html.erb b/app/views/microposts/edit.html.erb[m
+[1mnew file mode 100644[m
+[1mindex 0000000..30f1480[m
+[1m--- /dev/null[m
+[1m+++ b/app/views/microposts/edit.html.erb[m
+[36m@@ -0,0 +1,6 @@[m
+[32m+[m[32m<h1>Editing micropost</h1>[m
+[32m+[m
+[32m+[m[32m<%= render 'form' %>[m
+[32m+[m
+[32m+[m[32m<%= link_to 'Show', @micropost %> |[m
+[32m+[m[32m<%= link_to 'Back', microposts_path %>[m
+[1mdiff --git a/app/views/microposts/index.html.erb b/app/views/microposts/index.html.erb[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e73014c[m
+[1m--- /dev/null[m
+[1m+++ b/app/views/microposts/index.html.erb[m
+[36m@@ -0,0 +1,25 @@[m
+[32m+[m[32m<h1>Listing microposts</h1>[m
+[32m+[m
+[32m+[m[32m<table>[m
+[32m+[m[32m  <tr>[m
+[32m+[m[32m    <th>Content</th>[m
+[32m+[m[32m    <th>User</th>[m
+[32m+[m[32m    <th></th>[m
+[32m+[m[32m    <th></th>[m
+[32m+[m[32m    <th></th>[m
+[32m+[m[32m  </tr>[m
+[32m+[m
+[32m+[m[32m<% @microposts.each do |micropost| %>[m
+[32m+[m[32m  <tr>[m
+[32m+[m[32m    <td><%= micropost.content %></td>[m
+[32m+[m[32m    <td><%= micropost.user_id %></td>[m
+[32m+[m[32m    <td><%= link_to 'Show', micropost %></td>[m
+[32m+[m[32m    <td><%= link_to 'Edit', edit_micropost_path(micropost) %></td>[m
+[32m+[m[32m    <td><%= link_to 'Destroy', micropost, method: :delete, data: { confirm: 'Are you sure?' } %></td>[m
+[32m+[m[32m  </tr>[m
+[32m+[m[32m<% end %>[m
+[32m+[m[32m</table>[m
+[32m+[m
+[32m+[m[32m<br />[m
+[32m+[m
+[32m+[m[32m<%= link_to 'New Micropost', new_micropost_path %>[m
+[1mdiff --git a/app/views/microposts/new.html.erb b/app/views/microposts/new.html.erb[m
+[1mnew file mode 100644[m
+[1mindex 0000000..b0ef41f[m
+[1m--- /dev/null[m
+[1m+++ b/app/views/microposts/new.html.erb[m
+[36m@@ -0,0 +1,5 @@[m
+[32m+[m[32m<h1>New micropost</h1>[m
+[32m+[m
+[32m+[m[32m<%= render 'form' %>[m
+[32m+[m
+[32m+[m[32m<%= link_to 'Back', microposts_path %>[m
+[1mdiff --git a/app/views/microposts/show.html.erb b/app/views/microposts/show.html.erb[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e15f8ee[m
+[1m--- /dev/null[m
+[1m+++ b/app/views/microposts/show.html.erb[m
+[36m@@ -0,0 +1,15 @@[m
+[32m+[m[32m<p id="notice"><%= notice %></p>[m
+[32m+[m
+[32m+[m[32m<p>[m
+[32m+[m[32m  <b>Content:</b>[m
+[32m+[m[32m  <%= @micropost.content %>[m
+[32m+[m[32m</p>[m
+[32m+[m
+[32m+[m[32m<p>[m
+[32m+[m[32m  <b>User:</b>[m
+[32m+[m[32m  <%= @micropost.user_id %>[m
+[32m+[m[32m</p>[m
+[32m+[m
+[32m+[m
+[32m+[m[32m<%= link_to 'Edit', edit_micropost_path(@micropost) %> |[m
+[32m+[m[32m<%= link_to 'Back', microposts_path %>[m
+[1mdiff --git a/config/routes.rb b/config/routes.rb[m
+[1mindex ea4a195..c023975 100644[m
+[1m--- a/config/routes.rb[m
+[1m+++ b/config/routes.rb[m
+[36m@@ -1,4 +1,6 @@[m
+ DemoApp::Application.routes.draw do[m
+[32m+[m[32m  resources :microposts[m
+[32m+[m
+   resources :users[m
+ [m
+   # The priority is based upon order of creation:[m
+[1mdiff --git a/db/migrate/20121010082754_create_microposts.rb b/db/migrate/20121010082754_create_microposts.rb[m
+[1mnew file mode 100644[m
+[1mindex 0000000..1ea9615[m
+[1m--- /dev/null[m
+[1m+++ b/db/migrate/20121010082754_create_microposts.rb[m
+[36m@@ -0,0 +1,10 @@[m
+[32m+[m[32mclass CreateMicroposts < ActiveRecord::Migration[m
+[32m+[m[32m  def change[m
+[32m+[m[32m    create_table :microposts do |t|[m
+[32m+[m[32m      t.string :content[m
+[32m+[m[32m      t.integer :user_id[m
+[32m+[m
+[32m+[m[32m      t.timestamps[m
+[32m+[m[32m    end[m
+[32m+[m[32m  end[m
+[32m+[m[32mend[m
+[1mdiff --git a/db/schema.rb b/db/schema.rb[m
+[1mindex 54a200b..8602f04 100644[m
+[1m--- a/db/schema.rb[m
+[1m+++ b/db/schema.rb[m
+[36m@@ -11,7 +11,14 @@[m
+ #[m
+ # It's strongly recommended to check this file into your version control system.[m
+ [m
+[31m-ActiveRecord::Schema.define(:version => 20120730222138) do[m
+[32m+[m[32mActiveRecord::Schema.define(:version => 20121010082754) do[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m  create_table "microposts", :force => true do |t|[m[41m[m
+[32m+[m[32m    t.string   "content"[m[41m[m
+[32m+[m[32m    t.integer  "user_id"[m[41m[m
+[32m+[m[32m    t.datetime "created_at", :null => false[m[41m[m
+[32m+[m[32m    t.datetime "updated_at", :null => false[m[41m[m
+[32m+[m[32m  end[m[41m[m
+ [m
+   create_table "users", :force => true do |t|[m
+     t.string   "name"[m
+[1mdiff --git a/test/fixtures/microposts.yml b/test/fixtures/microposts.yml[m
+[1mnew file mode 100644[m
+[1mindex 0000000..0965034[m
+[1m--- /dev/null[m
+[1m+++ b/test/fixtures/microposts.yml[m
+[36m@@ -0,0 +1,9 @@[m
+[32m+[m[32m# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html[m
+[32m+[m
+[32m+[m[32mone:[m
+[32m+[m[32m  content: MyString[m
+[32m+[m[32m  user_id: 1[m
+[32m+[m
+[32m+[m[32mtwo:[m
+[32m+[m[32m  content: MyString[m
+[32m+[m[32m  user_id: 1[m
